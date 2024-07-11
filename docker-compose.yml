@@ -18,11 +18,16 @@ services:
       - node-network
 
   app:
-    build: ./docker/node
+    build:
+        context: .
+        dockerfile: ./docker/node/Dockerfile
     image: rodrigoborgs/node
     container_name: app
     restart: always
     tty: true
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - node-network
     depends_on:
@@ -35,7 +40,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./app/src:/var/www/html
+      - ./app/index.html:/var/www/html
       - ./docker/nginx:/etc/nginx/conf.d
     depends_on:
       - app

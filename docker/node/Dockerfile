@@ -2,14 +2,14 @@ FROM node:22-bullseye
 
 WORKDIR /usr/src/app
 
-COPY package.json .
+COPY ./app/package.json .
 
 RUN apt-get update && \
     apt-get install -y wget netcat-traditional && \
     wget -q -O /usr/bin/wait-for https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for && \
     chmod +x /usr/bin/wait-for
 
-COPY . .
+COPY ./app .
 
 RUN chmod 744 ./start.sh
 
